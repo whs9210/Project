@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="notice">
+
+	<select id="select" parameterType="noticeDTO" resultMap="rsMap">
+		SELECT * FROM notice WHERE notice_id = #{notice_id}
+	</select>
+
+	<resultMap type="noticeDTO" id="rsMap">
+		<result property="notice_id" column="notice_id" />
+		<result property="notice_title" column="notice_title" />
+		<result property="notice_content" column="notice_content" />
+		<result property="notice_img" column="notice_img" />
+		<result property="mid" column="mid" />
+		<result property="notice_date" column="notice_date" />
+		<result property="pname" column="pname" />
+	</resultMap>
+
+	<select id="selectAll" resultMap="rsMap">
+		SELECT * FROM notice
+	</select>
+
+	<insert id="insert" parameterType="noticeDTO">
+		INSERT INTO notice VALUES(notice_seq.NextVal,#{notice_title},#{notice_content},#{notice_img},#{mid},sysdate,#{pname})
+	</insert>
+
+	<update id="update" parameterType="noticeDTO">
+		UPDATE notice SET notice_content = #{notice_content}, notice_img = #{notice_img}, notice_title = #{notice_title} WHERE notice_id = #{notice_id}
+	</update>
+
+	<delete id="delete" parameterType="noticeDTO">
+		DELETE FROM notice WHERE
+		notice_id = #{notice_id}
+	</delete>
+
+</mapper>

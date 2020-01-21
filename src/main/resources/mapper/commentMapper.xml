@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="comment">
+
+	<select id="selectList" parameterType="commentDTO" resultMap="rsMap">
+		SELECT * FROM "notice_comment" where notice_id = #{notice_id}
+	</select>
+	
+
+	<resultMap type="commentDTO" id="rsMap">
+		<result property="comment_id" column="comment_id" />
+		<result property="mid" column="mid" />
+		<result property="notice_id" column="notice_id" />
+		<result property="comment_content" column="comment_content" />
+		<result property="comment_date" column="comment_date" />
+	</resultMap>
+	
+	<select id="selectAll" resultMap="rsMap">
+		SELECT * FROM "notice_comment"
+	</select>
+
+	<insert id="insert" parameterType="commentDTO">
+		INSERT INTO "notice_comment" VALUES(coment_seq.NextVal,#{mid},#{notice_id},#{comment_content},sysdate)
+	</insert>
+
+	<update id="update" parameterType="commentDTO">
+		UPDATE notice_comment
+		SET
+		comment_content=#{comment_content}
+		WHERE
+		mid = #{mid}
+	</update>
+
+	<delete id="delete" parameterType="commentDTO">
+		DELETE FROM "notice_comment" WHERE
+		mid = #{mid}
+	</delete>
+
+</mapper>

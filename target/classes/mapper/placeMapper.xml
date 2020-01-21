@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="place">
+
+	<select id="selectOne" parameterType="placeDTO"
+		resultMap="rsMap">
+		SELECT pname FROM PLACE WHERE (pname LIKE '%#{pname}%' OR addr LIKE '%#{pname}%')
+	</select>
+	
+	<resultMap type="placeDTO" id="rsMap">
+		<result property="pname" column="pname" />
+		<result property="addr" column="addr" />
+		<result property="lat" column="lat" />
+		<result property="lng" column="lng" />
+		<result property="category" column="category" />
+		<result property="marked" column="makred" />
+		<result property="images" column="images" />
+	</resultMap>
+
+	<select id="selectList" resultMap="rsMap"
+		parameterType="placeDTO">
+		select * from place where pname = #{pname}
+	</select>
+
+
+	<select id="selectList2" resultMap="rsMap"
+		parameterType="placeDTO">
+		select * from place
+	</select>
+
+	<insert id="insert" parameterType="placeDTO">
+		INSERT INTO place
+		VALUES(#{PNAME},#{ADDR},#{LAT},#{LNG},#{CATEGORY},#{MARKED})
+	</insert>
+
+	<update id="update" parameterType="placeDTO">
+		UPDATE place
+		SET
+		PNAME=#{PNAME}
+		WHERE
+		ADDR = #{ADDR}ㄴ
+	</update>
+
+	<delete id="delete" parameterType="placeDTO">
+		DELETE FROM place WHERE
+		PNAME =
+		#{PNAME}
+	</delete>
+
+
+	<select id="selectCategory" parameterType="placeDTO"
+		resultMap="rsMap2">
+		SELECT * FROM PLACE WHERE category = #{category}
+	</select>
+	<resultMap type="placeDTO" id="rsMap2">
+		<result property="pname" column="pname" />
+		<result property="addr" column="addr" />
+		<result property="lat" column="lat" />
+		<result property="lng" column="lng" />
+		<result property="category" column="category" />
+		<result property="images" column="images" />
+
+
+	</resultMap>
+
+
+	<select id="course" parameterType="placeDTO" resultMap="rsMap3">
+		SELECT * FROM place WHERE marked = #{marked} ORDER BY "imgnumber" asc
+	</select>
+	<resultMap type="placeDTO" id="rsMap3">
+		<result property="pname" column="pname" />
+		<result property="addr" column="addr" />
+		<result property="lat" column="lat" />
+		<result property="lng" column="lng" />
+		<result property="category" column="category" />
+		<result property="marked" column="marked" />
+		<result property="images" column="images" />
+		<result property="imgnumber" column="imgnumber" />
+		<result property="content" column="content" />
+	</resultMap>
+	
+	<select id="panmeList" resultMap="rsMap" parameterType="placeDTO">
+   select pname from place 
+   </select>
+</mapper>

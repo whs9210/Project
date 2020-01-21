@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	<mvc:annotation-driven />
+	<context:property-placeholder
+		location="classpath:db.properties" />
+	<!-- 싱글톤 객체 생성할 것 들 -->
+	<!-- myBatis -->
+	<bean id="myBatis" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="factory"></constructor-arg>
+	</bean>
+	<!-- myBatis 설정용 객체 -->
+	<bean id="factory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" value="classpath:config.xml" />
+		<property name="dataSource" ref="dbcp" />
+	</bean>
+	<!-- dbcp 담당 객체 -->
+	<bean id="dbcp" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${jdbc.driver}"></property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="username" value="${jdbc.id}"></property>
+		<property name="password" value="${jdbc.pw}"></property>
+	</bean>
+
+	<!-- Google 소셜 로그인 연결 설정 -->
+	<bean id="googleOAuth2Template"
+		class="org.springframework.social.google.connect.GoogleOAuth2Template">
+		<constructor-arg value="1037277618583-1a85rgp50kmoqvht27jvtcfb48ckunms.apps.googleusercontent.com" />
+		<constructor-arg value="wj14foLW6Xz0INroam7G4r7j" />
+	</bean>
+	<bean id="googleOAuth2Parameters"
+		class="org.springframework.social.oauth2.OAuth2Parameters">
+		<property name="scope" value="profile"></property>
+		<property name="redirectUri"
+			value="http://localhost:8888/mvc01/gcallback"/>
+	</bean>
+	<bean id="authInfo" class="com.champion.mvc01.AuthInfo">
+		<constructor-arg value="1037277618583-1a85rgp50kmoqvht27jvtcfb48ckunms.apps.googleusercontent.com" />
+		<constructor-arg value="wj14foLW6Xz0INroam7G4r7j" />
+	</bean>
+	<!-- Gmail -->
+	<bean id="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="아이디@gmail.com" />
+		<property name="password" value="비밀번호" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.champion.mvc01.MemberDTO" alias="memberDTO"></typeAlias>
+		<typeAlias type="com.champion.mvc01.PlaceDTO" alias="placeDTO"></typeAlias>
+		<typeAlias type="com.champion.mvc01.NoticeDTO" alias="noticeDTO"></typeAlias>
+		<typeAlias type="com.champion.mvc01.CommentDTO" alias="commentDTO"></typeAlias>
+		<typeAlias type="com.champion.mvc01.VisitedDTO" alias="visitedDTO"></typeAlias>
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="mapper/memberMapper.xml" />
+		<mapper resource="mapper/placeMapper.xml" />
+		<mapper resource="mapper/noticeMapper.xml" />
+		<mapper resource="mapper/commentMapper.xml" />
+		<mapper resource="mapper/visitedMapper.xml" />
+	</mappers>
+		
+	
+</configuration>
